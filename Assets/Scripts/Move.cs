@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Move : MonoBehaviour
 {
-    public float speed;
+    [SerializeField] private float speed;
     private Vector2 direction;
     private Rigidbody2D rb;
 
@@ -12,37 +12,37 @@ public class Move : MonoBehaviour
     }
     void Update()
     {
-        direction = Vector2.zero;   //обнуление вектора движени€
+        direction = Vector2.zero;   //ќбнуление вектора движени€
 
-        //горизонтальный вектор
+        //√оризонтальный вектор
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
-            direction.x = -1;                                                      //движение влево
+            direction.x = -1;                                                      //ƒвижение влево
         }
         else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
-            direction.x = 1;                                                       //движение вправо
+            direction.x = 1;                                                       //ƒвижение вправо
         }
 
-        //вертикальный вектор
+        //¬ертикальный вектор
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
-            direction.y = 1;                                                       //движение вверх
+            direction.y = 1;                                                       //ƒвижение вверх
         }
         else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
-            direction.y = -1;                                                      //движение вниз
+            direction.y = -1;                                                      //ƒвижение вниз
         }
 
-        //преп€тствие диагональному передвижению
-        
+        //ѕреп€тствие диагональному передвижению
+
         if (direction.x != 0)
         {
-            direction.y = 0;                                                       //обнуление вертикального вектора
+            direction.y = 0;                                                       //ќбнуление вертикального вектора
         }
         else if (direction.y != 0)
         {
-            direction.x = 0;                                                       //обнуление горизонтального вектора
+            direction.x = 0;                                                       //ќбнуление горизонтального вектора
         }
     }
 
