@@ -10,12 +10,10 @@ namespace Assets.Scripts.Managers
     public class PlayerManager : IPlayerManager
     {
         private readonly IPLayerControlsRepository _controlsRepository;
-        private readonly IPlayerActionsService _actionsService;
 
         public PlayerManager()
         {
             _controlsRepository = new PlayerControlsRepository();
-            _actionsService = new PlayerActionsService();
         }
 
         // TODO: Исправить баги логики перемещения
@@ -27,11 +25,13 @@ namespace Assets.Scripts.Managers
             _controlsRepository.GetAction(PlayerActionType.Move).performed += ctx =>
             {
                 Vector2 inputDirection = ctx.ReadValue<Vector2>();
+                Debug.Log($"[INPUT] Персонаж получил направление: {inputDirection}");
 
                 // Если нажаты противоположные клавиши — стоим
                 if (Mathf.Approximately(inputDirection.x, 0) && Mathf.Approximately(inputDirection.y, 0))
                 {
-                    _actionsService.Move(rb, Vector2.zero, speed);
+                    rb.linearVelocity = Vector2.zero;
+                    Debug.Log("[STOP] Все клавиши отпущены, персонаж остановлен.");
                     return;
                 }
 
@@ -46,18 +46,22 @@ namespace Assets.Scripts.Managers
                 }
 
                 lastDirection = currentDirection; // Запоминаем направление
-                _actionsService.Move(rb, currentDirection, speed);
+                rb.linearVelocity = currentDirection * speed;
+                Debug.Log($"[MOVE] Персонаж движется в направлении: {currentDirection}");
+                Debug.Log($"[SPEED] Текущая скорость: {rb.linearVelocity}");
             };
 
             _controlsRepository.GetAction(PlayerActionType.Move).canceled += ctx =>
             {
                 Vector2 inputDirection = ctx.ReadValue<Vector2>();
+                Debug.Log($"[CANCELED] Клавиша отпущена, текущее значение: {inputDirection}");
 
                 // Если все клавиши отпущены — персонаж останавливается
                 if (Mathf.Approximately(inputDirection.x, 0) && Mathf.Approximately(inputDirection.y, 0))
                 {
-                    _actionsService.Move(rb, Vector2.zero, speed);
+                    rb.linearVelocity = Vector2.zero;
                     lastDirection = Vector2.zero; // Сбрасываем направление
+                    Debug.Log("[STOP] Все клавиши отпущены, персонаж остановлен.");
                     return;
                 }
 
@@ -76,7 +80,9 @@ namespace Assets.Scripts.Managers
                 }
 
                 lastDirection = currentDirection;
-                _actionsService.Move(rb, currentDirection, speed);
+                rb.linearVelocity = currentDirection * speed;
+                Debug.Log($"[MOVE] Персонаж переключился в направление: {currentDirection}");
+                Debug.Log($"[SPEED] Текущая скорость: {rb.linearVelocity}");
             };
         }
 
@@ -85,7 +91,7 @@ namespace Assets.Scripts.Managers
             // Удерживание клавиш для взаимодействия
             _controlsRepository.GetAction(PlayerActionType.Interact).performed += _ =>
             {
-                _actionsService.Interact();
+                Debug.Log("Игрок взаимодействует с объектом!");
             };
         }
     }

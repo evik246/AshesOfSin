@@ -24,6 +24,11 @@ namespace Assets.Scripts.Repositories
             _playerInput.Enable();
         }
 
+        public void Dispose()
+        {
+            _playerInput.Disable();
+        }
+
         public void SetBinding(PlayerActionType action, string newBindingPath)
         {
             var inputAction = GetAction(action);
