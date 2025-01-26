@@ -1,25 +1,53 @@
 using UnityEngine;
-using UnityEngine.InputSystem.XR.Haptics;
 
 public class Move : MonoBehaviour
 {
-    public float speed;
+    [SerializeField] private float speed;
     private Vector2 direction;
     private Rigidbody2D rb;
 
-    void Start ()
+    void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
-    void Update ()
+    void Update()
     {
-        direction.x = Input.GetAxisRaw("Horizontal");
-        direction.y = Input.GetAxisRaw("Vertical");
-    }    
+        direction = Vector2.zero;   //Обнуление вектора движения
 
-    void FixedUpdate ()
+        //Горизонтальный вектор
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+        {
+            direction.x = -1;                                                      //Движение влево
+        }
+        else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+        {
+            direction.x = 1;                                                       //Движение вправо
+        }
+
+        //Вертикальный вектор
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+        {
+            direction.y = 1;                                                       //Движение вверх
+        }
+        else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+        {
+            direction.y = -1;                                                      //Движение вниз
+        }
+
+        //Препятствие диагональному передвижению
+
+        if (direction.x != 0)
+        {
+            direction.y = 0;                                                       //Обнуление вертикального вектора
+        }
+        else if (direction.y != 0)
+        {
+            direction.x = 0;                                                       //Обнуление горизонтального вектора
+        }
+    }
+
+    void FixedUpdate()
     {
         rb.MovePosition(rb.position + direction * speed * Time.fixedDeltaTime);
     }
-
 }
