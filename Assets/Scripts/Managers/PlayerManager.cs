@@ -2,7 +2,6 @@
 using Assets.Scripts.Contracts.Services;
 using Assets.Scripts.Models;
 using Assets.Scripts.Repositories;
-using Assets.Scripts.Services;
 using UnityEngine;
 
 namespace Assets.Scripts.Managers
@@ -16,7 +15,6 @@ namespace Assets.Scripts.Managers
             _controlsRepository = new PlayerControlsRepository();
         }
 
-        // TODO: Исправить баги логики перемещения
         public void InitializeMovement(Rigidbody2D rb, float speed)
         {
             Vector2 lastDirection = Vector2.zero;
@@ -25,18 +23,16 @@ namespace Assets.Scripts.Managers
             _controlsRepository.GetAction(PlayerActionType.Move).performed += ctx =>
             {
                 Vector2 inputDirection = ctx.ReadValue<Vector2>();
-                Debug.Log($"[INPUT] Персонаж получил направление: {inputDirection}");
 
                 // Если нажаты противоположные клавиши — стоим
                 if (Mathf.Approximately(inputDirection.x, 0) && Mathf.Approximately(inputDirection.y, 0))
                 {
                     rb.linearVelocity = Vector2.zero;
-                    Debug.Log("[STOP] Все клавиши отпущены, персонаж остановлен.");
                     return;
                 }
 
                 // Двигаемся в новое направление, если его приоритет выше
-                if (Mathf.Abs(inputDirection.x) > Mathf.Abs(inputDirection.y) || lastDirection.y != 0)
+                if (Mathf.Abs(inputDirection.x) > Mathf.Abs(inputDirection.y) || lastDirection.y == 1 || lastDirection.y == -1)
                 {
                     currentDirection = new Vector2(Mathf.Sign(inputDirection.x), 0);
                 }
@@ -45,23 +41,19 @@ namespace Assets.Scripts.Managers
                     currentDirection = new Vector2(0, Mathf.Sign(inputDirection.y));
                 }
 
-                lastDirection = currentDirection; // Запоминаем направление
+                lastDirection = inputDirection; // Запоминаем направление
                 rb.linearVelocity = currentDirection * speed;
-                Debug.Log($"[MOVE] Персонаж движется в направлении: {currentDirection}");
-                Debug.Log($"[SPEED] Текущая скорость: {rb.linearVelocity}");
             };
 
             _controlsRepository.GetAction(PlayerActionType.Move).canceled += ctx =>
             {
                 Vector2 inputDirection = ctx.ReadValue<Vector2>();
-                Debug.Log($"[CANCELED] Клавиша отпущена, текущее значение: {inputDirection}");
 
                 // Если все клавиши отпущены — персонаж останавливается
                 if (Mathf.Approximately(inputDirection.x, 0) && Mathf.Approximately(inputDirection.y, 0))
                 {
                     rb.linearVelocity = Vector2.zero;
                     lastDirection = Vector2.zero; // Сбрасываем направление
-                    Debug.Log("[STOP] Все клавиши отпущены, персонаж остановлен.");
                     return;
                 }
 
@@ -79,10 +71,8 @@ namespace Assets.Scripts.Managers
                     currentDirection = lastDirection;
                 }
 
-                lastDirection = currentDirection;
+                lastDirection = inputDirection;
                 rb.linearVelocity = currentDirection * speed;
-                Debug.Log($"[MOVE] Персонаж переключился в направление: {currentDirection}");
-                Debug.Log($"[SPEED] Текущая скорость: {rb.linearVelocity}");
             };
         }
 
