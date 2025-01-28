@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts.Contracts.Managers;
-using Assets.Scripts.Managers;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Scripts.UnityScripts
 {
@@ -13,13 +13,18 @@ namespace Assets.Scripts.UnityScripts
         public float speed = 5f;
 
         private Rigidbody2D _rb;
-        private IPlayerManager _playerManager;
+        private IPlayerActionsManager _playerActionsManager;
+
+        [Inject]
+        private void Construct(IPlayerActionsManager playerActionsManager)
+        {
+            _playerActionsManager = playerActionsManager;
+        } 
 
         private void Start()
         {
             _rb = GetComponent<Rigidbody2D>();
-            _playerManager = new PlayerManager();
-            _playerManager.InitializeMovement(_rb, speed);
+            _playerActionsManager.InitializeMovement(_rb, speed);
         }
     }
 }

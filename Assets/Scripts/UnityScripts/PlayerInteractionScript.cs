@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts.Contracts.Managers;
-using Assets.Scripts.Managers;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Scripts.UnityScripts
 {
@@ -9,12 +9,17 @@ namespace Assets.Scripts.UnityScripts
     /// </summary>
     public class PlayerInteractionScript : MonoBehaviour
     {
-        private IPlayerManager _playerManager;
+        private IPlayerActionsManager _playerActionsManager;
+
+        [Inject]
+        private void Construct(IPlayerActionsManager playerActionsManager)
+        {
+            _playerActionsManager = playerActionsManager;
+        }
 
         private void Start()
         {
-            _playerManager = new PlayerManager();
-            _playerManager.InitializeInteraction();
+            _playerActionsManager.InitializeInteraction();
         }
     }
 }
