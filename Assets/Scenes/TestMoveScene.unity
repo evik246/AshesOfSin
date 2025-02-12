@@ -288,6 +288,7 @@ GameObject:
   - component: {fileID: 275652174}
   - component: {fileID: 275652173}
   - component: {fileID: 275652176}
+  - component: {fileID: 275652177}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -413,6 +414,18 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &275652177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275652172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59b4d61d10bbfed47b76b3f2cc973852, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &404638023
 GameObject:
   m_ObjectHideFlags: 0
@@ -14080,6 +14093,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1143610525}
   - component: {fileID: 1143610526}
+  - component: {fileID: 1143610527}
+  - component: {fileID: 1143610528}
   m_Layer: 0
   m_Name: SpriteObj
   m_TagString: Untagged
@@ -14157,6 +14172,45 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1143610527
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1143610524}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 03db75a671825494fb9d73713536c8c6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1143610528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1143610524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20cadbde76d2c96499f655b418413687, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idle: {fileID: 7400000, guid: b683822822bad17429f66f4221db7c75, type: 2}
+  moveLeft: {fileID: 7400000, guid: 43061ab5c5567474ea258bd26d08dcbb, type: 2}
+  moveRight: {fileID: 7400000, guid: c95c8665501e3a0448029564ac0f43a0, type: 2}
+  moveUp: {fileID: 7400000, guid: 9642c061e863da744917320ea25cbb18, type: 2}
+  moveDown: {fileID: 7400000, guid: 85637143098750042ba80505415df6b4, type: 2}
 --- !u!1 &1153766937
 GameObject:
   m_ObjectHideFlags: 0
@@ -14217,7 +14271,7 @@ GameObject:
   - component: {fileID: 1590913415}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14283,8 +14337,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.4
+  m_Offset: {x: 0, y: 0.06768754}
+  m_Radius: 0.37028286
 --- !u!4 &1590913414
 Transform:
   m_ObjectHideFlags: 0

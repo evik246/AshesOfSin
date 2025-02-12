@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 7376652f4768d4adf82c2dec25babcaa
+guid: 2521b6229a37c4a56b4fd4e12227c2fb
 AssetOrigin:
   serializedVersion: 1
   productId: 114685
   packageName: Tiny RPG - Forest
   packageVersion: 1.0
-  assetPath: Assets/Tiny RPG Forest/Artwork/sprites/hero/walk/hero-walk-front/hero-walk-front-5.png
+  assetPath: Assets/Tiny RPG Forest/Artwork/sprites/hero/walk/hero-walk-side/hero-walk-side-1.png
   uploadId: 236522
 TextureImporter:
   internalIDToNameTable: []

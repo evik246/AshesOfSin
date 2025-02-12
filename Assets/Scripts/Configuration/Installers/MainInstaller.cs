@@ -41,7 +41,8 @@ public class MainInstaller : MonoInstaller
     {
         // Регистрация менеджеров
         Container.Bind<IPlayerActionsManager>().To<PlayerActionsManager>().AsSingle();
-        
+        Container.Bind<IAnimationManager>().To<AnimationManager>().AsTransient();
+
         // Регистрация репозиториев
         Container.Bind<IPLayerControlsRepository>().To<PlayerControlsRepository>().AsSingle();
     }
